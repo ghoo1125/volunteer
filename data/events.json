@@ -1,0 +1,103 @@
+{
+  "last_updated": "2026-04-06T08:00:07",
+  "total": 5,
+  "events": [
+    {
+      "id": "animal_tcapo_volunteer",
+      "type": "animal",
+      "type_label": "動物志工",
+      "title": "臺北市動物保護處",
+      "date": "2025-09-15",
+      "day_of_week": "週一",
+      "location": "台北市動物之家（內湖/士林）",
+      "city": "台北市",
+      "organizer": "台北市動物保護處",
+      "group_only": true,
+      "min_participants": null,
+      "notes": [
+        "截止日：2025-09-15",
+        "⚠️ 此公告已過截止日，請至官方頁面確認最新招募資訊"
+      ],
+      "expired": true,
+      "official_link": "https://www.tcapo.gov.taipei/cp.aspx?n=141D6BD837F00436",
+      "photo_url": "",
+      "source": "台北市動物保護處",
+      "source_url": "https://www.tcapo.gov.taipei/cp.aspx?n=141D6BD837F00436"
+    },
+    {
+      "id": "beach_19719a2e-6302-4e76-8e8a-7ce89e032bc2",
+      "type": "beach_cleanup",
+      "type_label": "淨灘",
+      "title": "林中學友會春季旅遊-淨灘愛地球",
+      "date": "2026-04-12",
+      "day_of_week": "週日",
+      "location": " 淨灘區域:頂寮到出水口段",
+      "city": "新北市",
+      "organizer": "社團法人中華民國新北市立林口國民中學校友會",
+      "group_only": false,
+      "min_participants": null,
+      "official_link": "https://ecolife2.moenv.gov.tw/BeachCleanup/Home/EventDetail/19719a2e-6302-4e76-8e8a-7ce89e032bc2",
+      "photo_url": "",
+      "source": "環境部海岸淨灘平台",
+      "source_url": "https://ecolife2.moenv.gov.tw/BeachCleanup/Home/JoinCleanUp"
+    },
+    {
+      "id": "beach_08d43a1e-0e9b-4981-8c4a-65b0dd307e60",
+      "type": "beach_cleanup",
+      "type_label": "淨灘",
+      "title": "沙崙海岸淨灘活動",
+      "date": "2026-04-18",
+      "day_of_week": "週六",
+      "location": "新北市淡水區沙崙海灘",
+      "city": "新北市",
+      "organizer": "林口高中學務處衛生糾察隊",
+      "group_only": false,
+      "min_participants": null,
+      "official_link": "https://ecolife2.moenv.gov.tw/BeachCleanup/Home/EventDetail/08d43a1e-0e9b-4981-8c4a-65b0dd307e60",
+      "photo_url": "",
+      "source": "環境部海岸淨灘平台",
+      "source_url": "https://ecolife2.moenv.gov.tw/BeachCleanup/Home/JoinCleanUp"
+    },
+    {
+      "id": "beach_7ce2d0f5-115c-4bb8-b606-cc77c3deae85",
+      "type": "beach_cleanup",
+      "type_label": "淨灘",
+      "title": "藥師淨灘，疼惜海洋",
+      "date": "2026-05-24",
+      "day_of_week": "週日",
+      "location": "翡翠灣",
+      "city": "新北市",
+      "organizer": "台北市藥師公會",
+      "group_only": false,
+      "min_participants": null,
+      "official_link": "https://ecolife2.moenv.gov.tw/BeachCleanup/Home/EventDetail/7ce2d0f5-115c-4bb8-b606-cc77c3deae85",
+      "photo_url": "",
+      "source": "環境部海岸淨灘平台",
+      "source_url": "https://ecolife2.moenv.gov.tw/BeachCleanup/Home/JoinCleanUp"
+    },
+    {
+      "id": "animal_spca_static",
+      "type": "animal",
+      "type_label": "動物志工",
+      "title": "台灣防止虐待動物協會（SPCA）志工招募",
+      "date": "",
+      "day_of_week": "",
+      "location": "台北市大安區（瑞芳收容所等）",
+      "city": "台北市",
+      "organizer": "台灣防止虐待動物協會",
+      "group_only": false,
+      "min_participants": 1,
+      "notes": [
+        "接受個人志工報名",
+        "服務項目：遛狗、動物照護、活動協助、中途寄養",
+        "聯絡：(02) 2738-2130 / spca@spca.org.tw",
+        "⚠️ 網站目前無法連線，請直接致電或 email 確認"
+      ],
+      "expired": false,
+      "official_link": "https://www.spca.org.tw",
+      "photo_url": "",
+      "source": "台灣防止虐待動物協會 SPCA",
+      "source_url": "https://www.spca.org.tw"
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>台北・新北 週末志工活動</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: #f5f6fa;
+      color: #222;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1a6b4a;
+      color: #fff;
+      padding: 24px 32px 20px;
+    }
+    header h1 { font-size: 1.5rem; font-weight: 700; }
+    header p  { font-size: 0.85rem; opacity: .75; margin-top: 4px; }
+
+    .controls {
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 14px 32px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .controls label { font-size: 0.82rem; color: #555; }
+    .controls select, .controls input[type="checkbox"] { accent-color: #1a6b4a; }
+    .controls select {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    #last-updated { margin-left: auto; font-size: 0.78rem; color: #888; }
+
+    main {
+      max-width: 960px;
+      margin: 28px auto;
+      padding: 0 20px;
+    }
+
+    #stats { font-size: 0.85rem; color: #666; margin-bottom: 16px; }
+
+    #no-results {
+      text-align: center;
+      padding: 60px 0;
+      color: #999;
+      display: none;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      display: flex;
+      gap: 16px;
+      border-left: 4px solid #ccc;
+      transition: box-shadow .15s;
+    }
+    .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+    .card[data-type="beach_cleanup"] { border-left-color: #1a6b4a; }
+    .card[data-type="animal"]        { border-left-color: #e07b2a; }
+
+    .card-date {
+      min-width: 64px;
+      text-align: center;
+      padding-top: 2px;
+    }
+    .card-date .month { font-size: 0.72rem; color: #888; text-transform: uppercase; }
+    .card-date .day   { font-size: 1.8rem; font-weight: 700; line-height: 1; color: #1a6b4a; }
+    .card[data-type="animal"] .card-date .day { color: #e07b2a; }
+    .card-date .weekday { font-size: 0.75rem; color: #666; margin-top: 2px; }
+
+    .card-body { flex: 1; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-beach  { background: #d4ede3; color: #1a6b4a; }
+    .badge-animal { background: #fde8d4; color: #c05e12; }
+    .badge-group  { background: #fde8d4; color: #c05e12; }
+    .badge-taipei { background: #e8f0fe; color: #2a56c6; }
+    .badge-ntpc   { background: #e8f4f0; color: #1e7a55; }
+
+    .card-meta {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: #555;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .card-meta span { display: flex; align-items: center; gap: 4px; }
+
+    .card-footer {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-link {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: #1a6b4a;
+      color: #fff;
+      transition: background .15s;
+    }
+    .btn-link:hover { background: #155838; }
+    .card[data-type="animal"] .btn-link { background: #e07b2a; }
+    .card[data-type="animal"] .btn-link:hover { background: #c05e12; }
+
+    .source-label { font-size: 0.75rem; color: #aaa; }
+
+    .group-warning {
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #7a5800;
+    }
+
+    .expired-warning {
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: #fce4ec;
+      border: 1px solid #f48fb1;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #880e4f;
+    }
+
+    .card.expired { opacity: .65; }
+
+    .no-date { color: #bbb; font-style: italic; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🌿 台北・新北 週末志工活動</h1>
+  <p>淨灘 &amp; 動物志工 — 每日自動更新</p>
+</header>
+
+<div class="controls">
+  <label>類型</label>
+  <select id="filter-type">
+    <option value="">全部</option>
+    <option value="beach_cleanup">淨灘</option>
+    <option value="animal">動物志工</option>
+  </select>
+
+  <label>地區</label>
+  <select id="filter-city">
+    <option value="">台北 + 新北</option>
+    <option value="台北市">台北市</option>
+    <option value="新北市">新北市</option>
+  </select>
+
+  <label class="filter-group">
+    <input type="checkbox" id="filter-hide-group" />
+    隱藏僅限團體報名
+  </label>
+
+  <span id="last-updated"></span>
+</div>
+
+<main>
+  <p id="stats"></p>
+  <div id="event-list"></div>
+  <div id="no-results">目前沒有找到符合條件的活動。</div>
+</main>
+
+<script>
+const DATA_URL = "data/events.json";
+
+let allEvents = [];
+
+async function loadData() {
+  try {
+    const resp = await fetch(DATA_URL + "?t=" + Date.now());
+    if (!resp.ok) throw new Error(resp.statusText);
+    return await resp.json();
+  } catch (e) {
+    console.error("載入資料失敗", e);
+    return null;
+  }
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr + "T00:00:00");
+  return {
+    month: d.toLocaleString("zh-TW", { month: "short" }),
+    day: d.getDate(),
+    weekday: ["日","一","二","三","四","五","六"][d.getDay()],
+  };
+}
+
+function cityBadge(city) {
+  if (city.includes("台北") || city.includes("臺北"))
+    return `<span class="badge badge-taipei">台北市</span>`;
+  if (city.includes("新北"))
+    return `<span class="badge badge-ntpc">新北市</span>`;
+  return `<span class="badge badge-taipei">${city}</span>`;
+}
+
+function renderCard(ev) {
+  const dateInfo = formatDate(ev.date);
+  const typeBadge = ev.type === "beach_cleanup"
+    ? `<span class="badge badge-beach">淨灘</span>`
+    : `<span class="badge badge-animal">動物志工</span>`;
+
+  const dateBlock = dateInfo
+    ? `<div class="card-date">
+        <div class="month">${dateInfo.month}</div>
+        <div class="day">${dateInfo.day}</div>
+        <div class="weekday">週${dateInfo.weekday}</div>
+       </div>`
+    : `<div class="card-date"><div class="day no-date">待定</div></div>`;
+
+  const groupWarning = ev.group_only
+    ? `<div class="group-warning">⚠️ ${
+        ev.min_participants
+          ? `需 ${ev.min_participants} 人以上，限團體報名`
+          : "限團體報名，無法單獨參加"
+      }</div>`
+    : "";
+
+  const expiredWarning = ev.expired
+    ? `<div class="expired-warning">📋 此公告已過截止日，請至官方頁面確認最新招募資訊</div>`
+    : "";
+
+  const noteBlock = (ev.notes && ev.notes.length)
+    ? ev.notes
+        .filter(n => !n.includes("已過截止日"))
+        .map(n => `<div style="font-size:.78rem;color:#888;margin-top:4px;">${n}</div>`)
+        .join("")
+    : "";
+
+  const metaParts = [
+    ev.location ? `<span>📍 ${ev.location}</span>` : "",
+    ev.organizer ? `<span>🏢 ${ev.organizer}</span>` : "",
+    ev.date      ? `<span>📅 ${ev.date}</span>` : "",
+  ].filter(Boolean).join("");
+
+  return `
+  <div class="card${ev.expired ? " expired" : ""}" data-type="${ev.type}" data-city="${ev.city}" data-group="${ev.group_only}">
+    ${dateBlock}
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">${ev.title}</span>
+        ${typeBadge}
+        ${cityBadge(ev.city)}
+        ${ev.group_only ? `<span class="badge badge-group">限團體</span>` : ""}
+        ${ev.expired ? `<span class="badge" style="background:#fce4ec;color:#880e4f;">已過期</span>` : ""}
+      </div>
+      <div class="card-meta">${metaParts}</div>
+      ${noteBlock}
+      ${groupWarning}
+      ${expiredWarning}
+      <div class="card-footer">
+        <a class="btn-link" href="${ev.official_link}" target="_blank" rel="noopener">官方連結 →</a>
+        <span class="source-label">來源：${ev.source}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function applyFilters() {
+  const typeVal = document.getElementById("filter-type").value;
+  const cityVal = document.getElementById("filter-city").value;
+  const hideGroup = document.getElementById("filter-hide-group").checked;
+
+  const filtered = allEvents.filter(ev => {
+    if (typeVal && ev.type !== typeVal) return false;
+    if (cityVal && !ev.city.includes(cityVal.replace("市", ""))) return false;
+    if (hideGroup && ev.group_only) return false;
+    return true;
+  });
+
+  const container = document.getElementById("event-list");
+  container.innerHTML = filtered.map(renderCard).join("");
+  document.getElementById("no-results").style.display = filtered.length ? "none" : "block";
+  document.getElementById("stats").textContent =
+    `顯示 ${filtered.length} / ${allEvents.length} 筆活動`;
+}
+
+async function init() {
+  const data = await loadData();
+
+  if (!data) {
+    document.getElementById("stats").textContent = "⚠️ 無法載入資料，請先執行 scraper.py";
+    return;
+  }
+
+  allEvents = data.events || [];
+
+  const updated = data.last_updated
+    ? new Date(data.last_updated).toLocaleString("zh-TW")
+    : "";
+  document.getElementById("last-updated").textContent = `最後更新：${updated}`;
+
+  ["filter-type", "filter-city"].forEach(id =>
+    document.getElementById(id).addEventListener("change", applyFilters));
+  document.getElementById("filter-hide-group").addEventListener("change", applyFilters);
+
+  applyFilters();
+}
+
+init();
+</script>
+</body>
+</html>
