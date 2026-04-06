@@ -150,7 +150,7 @@ def fetch_beach_events() -> list[dict]:
             "organizer": item.get("organizer", item.get("Organizer", "")),
             "group_only": group_only,
             "min_participants": min_p,
-            "official_link": f"{BEACH_DETAIL}/{event_id}" if event_id else BEACH_HOME,
+            "official_link": BEACH_HOME,
             "photo_url": item.get("photourl", item.get("PhotoUrl", "")),
             "source": "環境部海岸淨灘平台",
             "source_url": BEACH_HOME,
